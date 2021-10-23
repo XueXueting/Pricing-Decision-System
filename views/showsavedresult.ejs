@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Optimal Price Table</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+  </head>
+  <body>
+    <div class="logo">
+      <img src="img/Optimal_Pricing.png"></img>
+    </div>
+    <nav>
+      <div class="menu">
+        <%if (data!='undefined') { %>
+          <a href="/index">Home</a>
+        <% } else{ %>
+          <a href="/">Home</a>
+        <% } %>
+        <a href="/visualisation">Visualisation</a>
+        <%if (currentUser!=null) { %>
+          <a href="/history">History</a>
+        <% } %>
+        <a href="/about">About</a>
+        <%if (currentUser) { %>
+        <a href="/logout">Log Out</a>
+        <% } else{ %>
+        <a href="/login">Log In</a>
+        <% } %>
+      </div>
+    </nav>
+    <div class="container" style="min-height: fit-content;">
+      <div class="fileTitle">
+        <%= filename%>
+      </div>
+        <table class="center">
+            <tr>
+                <th>Product</th>
+                <th><%= data[0]%></th>
+                <th><%= data[1]%></th>
+                <th><%= data[2]%></th>
+                <th><%= data[3]%></th>
+                <th><%= data[4]%></th>
+            </tr>
+         
+            <% for (var i = 5; i < data.length-1; i) { %>
+                <tr>
+                 <% for (var j = 0; j < 6; j++) { %>
+                    <td><%= data[i++] %></td>
+                 <% } %>
+                </tr>    
+            <% } %>
+        </table>
+        <br/><br/>
+        <img src="https://firebasestorage.googleapis.com/v0/b/optimalpricingsystem.appspot.com/o/<%= uname%>%2F<%= filename%>?alt=media&token=<%= id%>"></img>
+        <br/><br/>
+        Created Date: <%= date %>
+        <br/><br/><br/><br/>
+        <form method="POST" action="/history">
+            <button class="btn" type="submit">Back</button>
+        </form>
+        <form method="POST" action="/shareFile">
+          <button class="btn" type="submit">Share</button>
+        </form>
+        <br><br>
+    </div>
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-col">
+            <div class="col-sm-12 col-md-6">
+              <h6>About</h6>
+              <p class="text-justify">OptimalPrice.com <i>Pricing Analysis Calculator </i> is an ....</p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <div class="col-xs-6 col-md-3">
+              <h6>Quick Links</h6>
+              <ul class="footer-links">
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/about">Contact Us</a></li>
+                <li><a href="#">Contribute</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+              </ul>
+            </div>
+          </div>
+        <hr>
+        <div class="footer-container">
+          <div class="footer-row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+              <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+           <a href="#">Optimal Pricing System</a>.
+              </p>
+            </div>
+  
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <ul class="social-icons">
+                <li><a class="facebook" href="#"><img src="img/facebook.png" class="fa fa-facebook" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="twitter" href="#"><img src="img/twitter.png" class="fa fa-twitter" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="linkedin" href="#"><img src="img/linkedin.jpg" class="fa fa-linkedin" style="width:100%;height: 100%;"></img></a></li>   
+              </ul>
+            </div>
+          </div>
+        </div>
+    </footer>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/8.2.6/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/8.2.6/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+  </body>
+</html>

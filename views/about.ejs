@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Optimal Price Table</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+  </head>
+  <body>
+    <div class="logo">
+      <img src="img/Optimal_Pricing.png"></img>
+    </div>
+    <nav>
+      <div class="menu">
+        <%if (data!='undefined') { %>
+          <a href="/index">Home</a>
+        <% } else{ %>
+          <a href="/">Home</a>
+        <% } %>
+        <a href="/visualisation">Visualisation</a>
+        <!-- <a href="#contact">Contact</a> -->
+        <%if (currentUser!=null) { %>
+          <a href="/history">History</a>
+        <% } %>
+        <a class="active" href="/about">About</a>
+        <%if (currentUser) { %>
+          <a href="/logout">Log Out</a>
+          <% } else{ %>
+          <a href="/login">Log In</a>
+          <% } %>
+      </div>
+    </nav>
+    <div class="container">
+            <h2 style="text-align:center">Our Team</h2>
+                <div class="row">
+                <div class="column">
+                    <div class="card">
+                    <img src="img\Prof_LiYi.jpg" alt="Assistant Professor Li Yi" style="width:100%;height:30%">
+                    <div class="about_container">
+                        <h3>Li Yi</h3>
+                        <p class="title">Assistant Professor</p>
+                        <p class="person-des">School of Computer Science and Engineering (SCSE)
+                            Nanyang Technological University (NTU)
+                            
+                            Address: Block N4-02b-64
+                            50 Nanyang Avenue, Singapore 639798
+                            Phone: +65 6790 4287</p>
+                        <p>yi_li@ntu.edu.sg</p>
+                        <p><button class="button">Contact</button></p>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                    <img src="img\Prof_Yan.png" alt="Assistant Professor Yan Zhen Zhen" style="width:100%;height:30%">
+                    <div class="about_container">
+                        <h3>Yan Zhenzhen</h3>
+                        <p class="title">Assistant Professor</p>
+                        <p class="person-des">School of Physical & Mathematical Sciences - Division of Mathematical Sciences<br>Phone: +65 6513 7466</p>
+                        <p>yanzz@ntu.edu.sg</p>
+                        <p><button class="button">Contact</button></p>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="card">
+                    <img src="img\user.png" alt="" style="width:100%;height:30%">
+                    <div class="about_container">
+                        <h3>Xueting</h3>
+                        <p class="title">Student</p>
+                        <p class="person-des">School of Computer Science and Engineering (SCSE)<br>Phone: +65 8777 7777</p>
+                        <p>xxue004@e.ntu.edu.sg</p>
+                        <p><button class="button">Contact</button></p>
+                    </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-col">
+            <div class="col-sm-12 col-md-6">
+              <h6>About</h6>
+              <p class="text-justify">OptimalPrice.com <i>Pricing Analysis Calculator </i> is an ....</p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <div class="col-xs-6 col-md-3">
+              <h6>Quick Links</h6>
+              <ul class="footer-links">
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/about">Contact Us</a></li>
+                <li><a href="#">Contribute</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+              </ul>
+            </div>
+          </div>
+        <hr>
+        <div class="footer-container">
+          <div class="footer-row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+              <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+           <a href="#">Optimal Pricing System</a>.
+              </p>
+            </div>
+  
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <ul class="social-icons">
+                <li><a class="facebook" href="#"><img src="img/facebook.png" class="fa fa-facebook" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="twitter" href="#"><img src="img/twitter.png" class="fa fa-twitter" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="linkedin" href="#"><img src="img/linkedin.jpg" class="fa fa-linkedin" style="width:100%;height: 100%;"></img></a></li>   
+              </ul>
+            </div>
+          </div>
+        </div>
+    </footer>
+  </body>
+</html>

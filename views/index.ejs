@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Optimal Price Table</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+<body>
+    <div class="logo">
+        <img src="img/Optimal_Pricing.png"></img>
+    </div>
+    <nav>
+        <div class="menu">
+            <%if (data!='undefined') { %>
+            <a class="active" href="/index">Home</a>
+            <% } else{ %>
+            <a class="active" href="/">Home</a>
+            <% } %>
+            <a href="/visualisation">Visualisation</a>
+            <!-- <a href="#contact">Contact</a> -->
+            <%if (currentUser!=null) { %>
+                <a href="/history">History</a>
+            <% } %>
+            <a href="/about">About</a>
+            <%if (currentUser) { %>
+                <a href="/logout">Log Out</a>
+                <% } else{ %>
+                <a href="/login">Log In</a>
+                <% } %>
+        </div>
+    </nav>
+    <div class="container">
+    <div class="intro">
+        <h1>Optimal Price Calculator</h1>
+        <p>
+            Welcome to the Optimal Price Calculator! This system helps you to calculate the best price to set 
+            for your product(s) to achieve the highest profit for your business. 
+            We will be using historical prices of the product, as well as market share at each period to analyze
+            and determine the peak point whereby the highest profit that can be made for the product(s). 
+            The prediction of the details are also generated for you to have a greater insights. 
+            <br/><br/>Input the base and sales file below to run the programme!
+        </p>
+    </div>
+    
+    <form method="POST" action="/upload-file" enctype="multipart/form-data">
+        <div class="getFile">
+            <div class="getBaseFile">
+                <h3>Upload Base CSV files:</h3>
+                <input type="file" name="baseFile" class="loadFile"/>
+            </div>
+            <div class="getSalesFile">
+                <h3>Upload Sales CSV files:</h3>
+                <input type="file" name="salesFile" class="loadFile"/>
+            </div>
+        </div>
+        <!-- <a href="/constraint">Add Constraint >></a> -->
+        <br><br>
+        <div class="runBtn">
+            <input type="submit" class="btn" name="btn_upload_multiple_file" value="Run >>" />
+        </div>
+    </form>
+    <br/><br/>
+    
+    <p><% if(constraint == "") { %>
+        <h2>No Constraint Applied</h2>
+      <%} else { %>
+        <h2>Constraint Applied</h2>
+        <h5>
+            <form method="POST" action="/selectConstraint">
+            
+            
+            <% for(i=0; i<constraint.length; i++) { %>
+              <%  for(j=0; j<constraint[i].length-1;j++) { %>
+                P<%= j %> x <%= constraint[i][j] %>
+                <% if(j != constraint[i].length-2 ) {%>
+                +
+                <% } } %>
+                 <= <%= constraint[i][j] %>
+
+                 <br/>
+
+                 <!-- <input type="text" class="deleteImg" name="imgIndex" value="<% j %>" hidden=true/> -->
+
+                 <!-- <button type='submit' formaction="/deleteConstraint" name="isConstraint" value="<%=i%>">Delete This Constraint</button>  -->
+                 
+                <br/><br/>
+            <% } %>
+        </form>
+        </h5>
+    <% } %>
+</p>
+    <br />
+    <p>
+        <!-- <%= data%>
+        <br/> -->
+        <table class="center">
+            <tr>
+                <th>Product</th>
+                <th><%= data[0]%></th>
+                <th><%= data[1]%></th>
+                <th><%= data[2]%></th>
+                <th><%= data[3]%></th>
+                <th><%= data[4]%></th>
+            </tr>
+         
+            <% for (var i = 5; i < data.length-1; i) { %>
+                <tr>
+                 <% for (var j = 0; j < 6; j++) { %>
+                    <td><%= data[i++] %></td>
+                 <% } %>
+                </tr>    
+            <% } %>
+        </table>
+
+    </p>
+    <br/>
+    <form method="POST" action="/saveResult">
+        <button type='submit' class="btn" formaction="/saveResult" name="saveResult" onclick="toPrompt()">Save Result</button>
+        <input type="hidden" name="output" id="hiddenInput" />
+    </form>
+    <br/><br/>
+    </div>
+
+<!-- Site footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="text-justify">OptimalPrice.com <i>Pricing Analysis Calculator </i> is an ....</p>
+          </div>
+      </div>
+      <div class="footer-col">
+          <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/about">Contact Us</a></li>
+              <li><a href="#">Contribute</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Sitemap</a></li>
+            </ul>
+          </div>
+        </div>
+      <hr>
+      <div class="footer-container">
+        <div class="footer-row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+         <a href="#">Optimal Pricing System</a>.
+            </p>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><img src="img/facebook.png" class="fa fa-facebook" style="width:100%;height: 100%;"></img></a></li>
+              <li><a class="twitter" href="#"><img src="img/twitter.png" class="fa fa-twitter" style="width:100%;height: 100%;"></img></a></li>
+              <li><a class="linkedin" href="#"><img src="img/linkedin.jpg" class="fa fa-linkedin" style="width:100%;height: 100%;"></img></a></li>   
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        //prompt popup box
+        function toPrompt(){
+            var input = document.getElementById('hiddenInput');
+            const promptValue = prompt("Please input a file name for this record:");
+            input.value = promptValue.toString();
+        }
+    </script>
+
+</body>
+</html>

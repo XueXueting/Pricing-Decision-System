@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Optimal Price Table</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+<body>
+  <div class="logo">
+    <img src="img/Optimal_Pricing.png"></img>
+  </div>
+  <nav>
+    <div class="menu">
+        <a href="/">Home</a>
+        <a href="/visualisation">Visualisation</a>
+        <!-- <a href="#contact">Contact</a> -->
+        <%if (currentUser!=null) { %>
+          <a href="/history">History</a>
+        <% } %>
+        <a href="/about">About</a>
+        <%if (currentUser) { %>
+          <a href="/logout">Log Out</a>
+          <% } else{ %>
+          <a href="/login">Log In</a>
+        <% } %>
+      </div>
+    </nav>
+
+    <div id="container" class="container" style="height: 1500px;">
+      <br/>
+      <form method="POST" action="/submitConstraint">
+      <h1>Enter Constraint:</h1>
+      <!-- <p style="width: 75%;margin-left: auto;margin-right: auto;font-size: large;">
+        Constraint format: C0 * P0 + C1 * P1 + C2 * P2 + C3 * P3 + C4 * P4 + C5 * P5 + C6 * P6 + C7 * P7 + C8 * P8 + C9 * P9 +
+        C10 * P10 + C11 * P11 + C12 * P12 + C13 * P13 + C14 * P14 + C15 * P15 + C16 * P16 + C17 * P17 + C18 * P18 + C19 * P19 <= B  
+      </p> -->
+      <div class="updateConstraint">
+        <table id="constraintTable" class="constraintTable">
+          <tr>
+            <th>Product</th>
+            <th>Constraint %</th>
+          </tr>
+          <% for (var i = 1; i <= 20; i++) { %>
+            <tr>
+              <td><label class="updateProduct" style="width: 200px;">Product <%= i %> </label></td>
+              <!-- "width: 150px;height:30px;border-radius: 2px;font-size: large; text-align: center;" -->
+              <!-- class="updateText" -->
+              <td><input type="text" id="constraint" name="constraint"  value="1" class="contraintInput"></td> 
+              <td class="addDelete" style="width:70px;"><img src="img/addConstraint.png" onclick="addConstraint(this)" style="width:35px;float: left;">
+              <img src="img/deleteConstraint.png" onclick="deleteConstraint(this)" style="width:35px;float: left;"></td>
+            </tr>
+          <% } %>
+            <tr>
+              <td>B value: </td>
+              <td><input type="text" id="constraint" name="constraint"  value="100" class="updateText" style="width: 150px;height:30px;border-radius: 2px;font-size: large; text-align: center;"></td>
+            </tr>
+        </table>
+          <button type="submit" class="btn" formaction="/submitConstraint" name="submitConstraint">Submit</button>
+      </div>
+      <div class="tooltip">
+        <img class="size_of_img" src="img/tooltip_icon.png" alt="Image 1"/>
+        <span class="tooltiptext">Constraint format: C0 * P0 + C1 * P1 + C2 * P2 + C3 * P3 + C4 * P4 + C5 * P5 + C6 * P6 + C7 * P7 + C8 * P8 + C9 * P9 +
+          C10 * P10 + C11 * P11 + C12 * P12 + C13 * P13 + C14 * P14 + C15 * P15 + C16 * P16 + C17 * P17 + C18 * P18 + C19 * P19 <= B  
+        </span>
+        <!-- <input type="hidden" value="bfilename" name="bfilename">
+        <input type="hidden" value="sfilename" name="sfilename"> -->
+      </div>
+      <br/><br/><br/><br/>
+    </form>
+    </div>
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+          <div class="col-sm-12 col-md-6">
+            <h6>About</h6>
+            <p class="text-justify">OptimalPrice.com <i>Pricing Analysis Calculator </i> is an ....</p>
+          </div>
+      </div>
+      <div class="footer-col">
+          <div class="col-xs-6 col-md-3">
+            <h6>Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/about">Contact Us</a></li>
+              <li><a href="#">Contribute</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Sitemap</a></li>
+            </ul>
+          </div>
+        </div>
+      <hr>
+      <div class="footer-container">
+        <div class="footer-row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+         <a href="#">Optimal Pricing System</a>.
+            </p>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><img src="img/facebook.png" class="fa fa-facebook" style="width:100%;height: 100%;"></img></a></li>
+              <li><a class="twitter" href="#"><img src="img/twitter.png" class="fa fa-twitter" style="width:100%;height: 100%;"></img></a></li>
+              <li><a class="linkedin" href="#"><img src="img/linkedin.jpg" class="fa fa-linkedin" style="width:100%;height: 100%;"></img></a></li>   
+            </ul>
+          </div>
+        </div>
+      </div>
+  </footer>
+
+  <script>
+    function addConstraint(r) {
+      var i = r.parentNode.parentNode.rowIndex;
+      var table = document.getElementById("constraintTable");
+      var row = table.insertRow(table.rows.length - 1);
+
+      //text box
+      var tb = document.createElement("input");
+      tb.type = "text";
+      tb.className = "contraintInput";
+      tb.setAttribute('value','1');
+
+      //img
+      var imgAdd = document.createElement("img");
+      imgAdd.style.float = "left"; 
+      imgAdd.style.width = "35px";
+      imgAdd.setAttribute('src','img/addConstraint.png');
+      imgAdd.setAttribute('onclick','addConstraint(this)');
+
+      var imgDelete = document.createElement("img");
+      imgDelete.style.float = "left"; 
+      imgDelete.style.width = "35px";
+      imgDelete.setAttribute('src','img/deleteConstraint.png');
+      imgDelete.setAttribute('onclick','deleteConstraint(this)');
+      
+
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      cell3.style.width = "70px";
+      cell1.innerHTML = "Product "+ (table.rows.length-2);
+      cell2.appendChild(tb);
+      cell3.appendChild(imgAdd);
+      cell3.appendChild(imgDelete);
+
+      var offsetHeight = document.getElementById('container').offsetHeight;
+      document.getElementById('container').style.height = (offsetHeight+50).toString()+"px";
+
+      //optionally set a css class on the image
+      // var class_name = "foo";
+      // img.setAttribute("class", class_name);
+
+      // document.body.appendChild(img);
+    }
+    function deleteConstraint(r) {
+      var i = r.parentNode.parentNode.rowIndex;
+      var table = document.getElementById("constraintTable");
+
+      for(i; i < table.rows.length - 2; i++){
+        table.rows[i+1].cells[0] = table.rows[i].cells[0];
+      }
+       document.getElementById("constraintTable").deleteRow(i);
+
+    //update container height
+    var offsetHeight = document.getElementById('container').offsetHeight;
+    document.getElementById('container').style.height = (offsetHeight-50).toString()+"px";
+
+    }
+  </script>
+</body>

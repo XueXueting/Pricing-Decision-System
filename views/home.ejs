@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Optimal Price Table</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+  </head>
+
+  <body>
+    <div class="logo">
+      <img src="img/Optimal_Pricing.png"></img>
+    </div>
+    <nav>
+      <div class="menu">
+        <%if (data!='undefined') { %>
+          <a class="active" href="/index">Home</a>
+        <% } else{ %>
+          <a class="active" href="/">Home</a>
+        <% } %>
+        <a href="/visualisation">Visualisation</a>
+        <%if (currentUser!=null) { %>
+          <a href="/history">History</a>
+        <% } %>
+        <a href="/about">About</a>
+        <%if (currentUser) { %>
+        <a href="/logout">Log Out</a>
+        <% } else{ %>
+        <a href="/login">Log In</a>
+        <% } %>
+      </div>
+    </nav>
+    <div class="container" style="height: 1700px;">
+    
+      <div class="slideshow-container">
+
+        <div class="mySlides fade">
+          <div class="numbertext">1 / 3</div>
+          <img src="img/slide1.png" style="width:100%;height: 520px;">
+          <div class="text">Caption Text</div>
+        </div>
+        
+        <div class="mySlides fade">
+          <div class="numbertext">2 / 3</div>
+          <img src="img/slide2.png" style="width:100%;height: 520px;">
+          <div class="text">Caption Two</div>
+        </div>
+        
+        <div class="mySlides fade">
+          <div class="numbertext">3 / 3</div>
+          <img src="img/slide3.png" style="width:100%;height: 520px;">
+          <div class="text">Caption Three</div>
+        </div>
+        
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        
+        </div>
+        <br>
+        
+    <div style="text-align:center">
+      <span class="dot" onclick="currentSlide(1)"></span> 
+      <span class="dot" onclick="currentSlide(2)"></span> 
+      <span class="dot" onclick="currentSlide(3)"></span> 
+    </div>
+
+    <div class="intro">
+      <br/>
+      <br/>
+      <!-- <h1>Optimal Price Calculator</h1> -->
+      <p>
+        Welcome to the Optimal Price Calculator! This system helps you to
+        calculate the best price to set for your product(s) to achieve the
+        highest profit for your business. We will be using historical prices of
+        the product, as well as market share at each period to analyze and
+        determine the peak point whereby the highest profit that can be made for
+        the product(s). The prediction of the details are also generated for you
+        to have a greater insights. <br/><br/> Input the base and sales file below to run
+        the programme!
+      </p>
+    </div>
+
+    <form method="POST" action="/upload-file" enctype="multipart/form-data">
+      <div class="getFile">
+        <div class="getBaseFile">
+          <h3>Upload Base CSV files:</h3>
+          <input type="file" name="baseFile" class="loadFile" />
+          <input type="hidden" value="<%= bfile %>">
+        </div>
+        <div class="getSalesFile">
+          <h3>Upload Sales CSV files:</h3>
+          <input type="file" name="salesFile" class="loadFile" />
+          <input type="hidden" value="<%= sfile %>" >
+        </div>
+      </div>
+      <a style="margin-right: 1px;" href="/constraint">Add Constraint >></a>
+      
+      <br><br><br><br>
+      <div class="runBtn">
+        <input
+          type="submit"
+          class="btn"
+          name="btn_upload_multiple_file"
+          value="Run >>"
+          onclick="toConfirm()"
+        />
+      </div>
+    </form>
+    <!-- <br><br> -->
+    <div class="showConstraintList" style="width: 80%;font-size: larger;margin: auto;margin-top: 150px;">
+    <p class="constraintList" style="float: left;">
+    <% if(constraint == "") { %>
+      <!-- <h2>No Constraint Applied</h2> -->
+    <%} else { %>
+      <!-- <h2><%= constraint %></h2> -->
+      <!-- <h4> -->
+          <form method="POST" action="/selectConstraint">
+          <h3>Constraint To Apply</h3>
+          <% for(i=0; i<constraint.length; i++) { %>
+            <%  for(j=0; j<constraint[i].length-1;j++) { %>
+              <% var count = j%>
+              P<%= ++count %> x <%= constraint[i][j] %>
+              <% if(j != constraint[i].length-2 ) {%>
+              +
+              <% } } %>
+               <= <%= constraint[i][j] %>
+            <button type='submit' formaction="/deleteConstraint" name="isConstraint" value="<%=i%>" class="btn" style="border: 4px;float: left;width: min-content;left: 85%;"><img src="img/delete.jpg" style="width: 25px;"></button> 
+            <br/><br/>
+          <% } %>
+          </form>
+      <% } %>
+    </p>
+  </div>
+  <div id="changeHeight" value=<% isAdded%>></div>
+
+  </div>
+
+    <!-- Site footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-col">
+            <div class="col-sm-12 col-md-6">
+              <h6>About</h6>
+              <p class="text-justify">OptimalPrice.com <i>Pricing Analysis Calculator </i> is an ....</p>
+            </div>
+        </div>
+        <div class="footer-col">
+            <div class="col-xs-6 col-md-3">
+              <h6>Quick Links</h6>
+              <ul class="footer-links">
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/about">Contact Us</a></li>
+                <li><a href="#">Contribute</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Sitemap</a></li>
+              </ul>
+            </div>
+          </div>
+        <hr>
+        <div class="footer-container">
+          <div class="footer-row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+              <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by 
+           <a href="#">Optimal Pricing System</a>.
+              </p>
+            </div>
+  
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <ul class="social-icons">
+                <li><a class="facebook" href="#"><img src="img/facebook.png" class="fa fa-facebook" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="twitter" href="#"><img src="img/twitter.png" class="fa fa-twitter" style="width:100%;height: 100%;"></img></a></li>
+                <li><a class="linkedin" href="#"><img src="img/linkedin.jpg" class="fa fa-linkedin" style="width:100%;height: 100%;"></img></a></li>   
+              </ul>
+            </div>
+          </div>
+        </div>
+  </footer>
+
+  <script>
+    // window.onload = function() {
+    //   var changeHeight = document.getElementById('changeHeight').getAttribute('value');
+    //   addHeight(changeHeight);
+    // };
+
+  //   window.addEventListener('load', 
+  //   function addHeight(){
+  //     var changeHeight = document.getElementById('changeHeight').getAttribute('value');
+  //     var offsetHeight = document.getElementById('container').offsetHeight;
+  //     document.getElementById('container').style.height = (offsetHeight+(50*10)).toString()+"px";
+  //  });
+
+    //add height of container
+    function addHeight(numConstraint){
+      var offsetHeight = document.getElementById('container').offsetHeight;
+      document.getElementById('container').style.height = (offsetHeight+(50*10)).toString()+"px";
+   }
+
+    //comfirm popup
+    function toConfirm(){
+      const confirmation = confirm("Are you sure to run?");
+   }
+
+    //slideshow
+    var slideIndex = 1;
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+    }
+    </script>
+    
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/8.2.6/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/8.2.6/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+  </body>
+</html>
